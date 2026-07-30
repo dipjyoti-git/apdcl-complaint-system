@@ -12,7 +12,8 @@ connectDB();
 
 const app = express();
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://your-vercel-app.vercel.app'],
+  origin: ['http://localhost:5173', 'https://apdcl-complaint-system-fe.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
 app.use(express.json());

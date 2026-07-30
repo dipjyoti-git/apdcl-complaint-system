@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --apdcl-orange: #F36F21;
+    --apdcl-orange-hover: #D95A0F;
+    --apdcl-blue: #3F51B5;
+    --apdcl-blue-dark: #2C387E;
+    --apdcl-bg: #F4F6F9;
+  }
+}
+
+@layer base {
+  html {
+    /* Increases the default root font size from 16px to 18px */
+    font-size: 20px; 
+  }
+
+  body {
+    /* Ensures clean rendering for standard text */
+    font-size: 2rem;
+    line-height: 1.5;
+  }
+}
+
+/* Reusable Utility Classes */
+.bg-apdcl-orange { background-color: var(--apdcl-orange); }
+.bg-apdcl-orange:hover { background-color: var(--apdcl-orange-hover); }
+.text-apdcl-orange { color: var(--apdcl-orange); }
+
+.bg-apdcl-blue { background-color: var(--apdcl-blue); }
+.text-apdcl-blue { color: var(--apdcl-blue); }
+
+.bg-apdcl-page { background-color: var(--apdcl-bg); }

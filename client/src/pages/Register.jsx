@@ -1,0 +1,141 @@
+import { useState, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import API from '../api';
+
+export default function Register() {
+  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' });
+  const [error, setError] = useState('');
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await API.post('/auth/register', form);
+      login(data);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed');
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#F4F6F9] flex flex-col font-sans">
+      {/* Top Portal Header */}
+      <header className="bg-[#3F51B5] text-white px-6 py-3 flex justify-between items-center shadow-md border-b-4 border-[#F36F21]">
+        <div className="flex items-center gap-3">
+          <div className="bg-[#F36F21] text-white text-xs font-bold px-2.5 py-1 rounded-sm uppercase tracking-wider">
+            CMS Portal
+          </div>
+          <h1 className="text-sm md:text-base font-bold tracking-wide">
+            ASSAM POWER DISTRIBUTION COMPANY LIMITED
+          </h1>
+        </div>
+        <span className="hidden sm:inline-block bg-[#2E7D32] text-white px-3 py-1 rounded text-xs font-semibold">
+          COMPLAINT MANAGEMENT SYSTEM
+        </span>
+      </header>
+
+      {/* Main Container */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="bg-white w-full max-w-md rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+          
+          {/* Card Title Banner */}
+          <div className="bg-[#2C387E] text-white p-6 text-center">
+            <h2 className="text-xl font-bold uppercase tracking-wider">
+              Complaint Management System
+            </h2>
+            <p className="text-xs text-blue-200 mt-1">
+              Create a new user / officer account
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            {error && (
+              <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 text-xs rounded">
+                {error}
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Full Name
+              </label>
+              <input 
+                type="text" 
+                placeholder="John Doe" 
+                className="w-full border border-gray-300 p-2.5 text-sm rounded focus:ring-2 focus:ring-[#3F51B5] focus:outline-none"
+                onChange={(e) => setForm({...form, name: e.target.value})} 
+                required 
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Email Address
+              </label>
+              <input 
+                type="email" 
+                placeholder="name@apdcl.org" 
+                className="w-full border border-gray-300 p-2.5 text-sm rounded focus:ring-2 focus:ring-[#3F51B5] focus:outline-none"
+                onChange={(e) => setForm({...form, email: e.target.value})} 
+                required 
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Password
+              </label>
+              <input 
+                type="password" 
+                placeholder="••••••••" 
+                className="w-full border border-gray-300 p-2.5 text-sm rounded focus:ring-2 focus:ring-[#3F51B5] focus:outline-none"
+                onChange={(e) => setForm({...form, password: e.target.value})} 
+                required 
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Account Type / Role
+              </label>
+              <select 
+                className="w-full border border-gray-300 p-2.5 text-sm rounded bg-white focus:ring-2 focus:ring-[#3F51B5] focus:outline-none"
+                onChange={(e) => setForm({...form, role: e.target.value})}
+              >
+                <option value="user">Consumer / Citizen</option>
+                <option value="agent">ESD Field Engineer (Agent)</option>
+                <option value="admin">Circle IT Admin</option>
+              </select>
+            </div>
+
+            <button 
+              type="submit" 
+              className="w-full bg-[#F36F21] hover:bg-orange-600 text-white font-bold py-2.5 text-sm rounded transition shadow-md uppercase tracking-wider"
+            >
+              Register Account ➔
+            </button>
+
+            <div className="text-center pt-3 border-t border-gray-100">
+              <p className="text-xs text-gray-600">
+                Already registered?{' '}
+                <Link to="/login" className="text-[#3F51B5] font-bold hover:underline">
+                  Sign In Here
+                </Link>
+              </p>
+            </div>
+          </form>
+
+          {/* Footer Branding */}
+          <div className="bg-gray-50 px-6 py-3 border-t border-gray-100 text-center">
+            <p className="text-[10px] text-gray-400">
+              Developed for APDCL Revenue & Helpdesk Systems
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

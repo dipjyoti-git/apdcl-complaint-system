@@ -1,10 +1,12 @@
 import Complaint from '../models/Complaint.js';
 import ActivityLog from '../models/ActivityLog.js';
 
-// Existing function: createComplaint
+// Existing function: createComplaint (accepts multipart form data with photos)
 export const createComplaint = async (req, res) => {
   const { title, description, category, consumerNumber, circle, esd } = req.body;
   
+  const photos = (req.files || []).map((f) => `/uploads/${f.filename}`);
+
   const complaint = await Complaint.create({
     title,
     description,
@@ -12,6 +14,7 @@ export const createComplaint = async (req, res) => {
     consumerNumber,
     circle,
     esd,
+    photos,
     user: req.user._id
   });
 

@@ -62,6 +62,10 @@ export default function Dashboard() {
     });
   };
 
+  // Photos are stored server-side as '/uploads/<file>'; build an absolute URL
+  // from the API base (works for both localhost dev and the Render backend)
+  const fileUrl = (p) => `${API.defaults.baseURL.replace(/\/api$/, '')}${p}`;
+
   return (
     <div className="max-w-6xl mx-auto">
       {/* 1. Custom Reports Overview Chart */}
@@ -105,6 +109,21 @@ export default function Dashboard() {
               </div>
 
               <p className="text-sm text-gray-600 mt-2">{c.description}</p>
+
+              {/* Attached Photos */}
+              {c.photos && c.photos.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {c.photos.map((p, i) => (
+                    <a key={i} href={fileUrl(p)} target="_blank" rel="noreferrer" title="Open full image">
+                      <img
+                        src={fileUrl(p)}
+                        alt={`Attachment ${i + 1}`}
+                        className="w-20 h-20 object-cover rounded border border-gray-200 hover:opacity-80 hover:border-[#3F51B5] transition"
+                      />
+                    </a>
+                  ))}
+                </div>
+              )}
 
               <div className="text-xs text-gray-500 mt-3 pt-2 border-t flex flex-wrap gap-4">
                 <span><strong>Category:</strong> {c.category}</span>

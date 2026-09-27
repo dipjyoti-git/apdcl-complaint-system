@@ -94,6 +94,15 @@ export default function Login() {
               Sign In ➔
             </button>
 
+            <div className="flex justify-between text-xs pt-1">
+              <Link to="/forgot-password" className="text-[#3F51B5] font-semibold hover:underline">
+                Forgot password?
+              </Link>
+              <Link to="/faq" className="text-[#3F51B5] font-semibold hover:underline">
+                FAQ & Helpline
+              </Link>
+            </div>
+
             <div className="text-center pt-3 border-t border-gray-100">
               <p className="text-xs text-gray-600">
                 Don't have an account?{' '}

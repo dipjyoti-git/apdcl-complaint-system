@@ -5,6 +5,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PortalLayout from './components/PortalLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import FaqPage from './pages/FaqPage';
 import Dashboard from './pages/Dashboard';
 import CreateComplaint from './pages/CreateComplaint';
 import ActivityLogPage from './pages/ActivityLogPage'; 
@@ -27,6 +30,9 @@ export default function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/faq" element={<FaqPage />} />
           
           {/* Protected Routes wrapped inside APDCL Layout */}
           <Route 
@@ -39,10 +45,11 @@ export default function App() {
               </ProtectedRoute>
             } 
           />
+          {/* Staff-only: agents and admins */}
           <Route 
             path="/activity-log" 
             element={
-              <ProtectedRoute>
+              <ProtectedRoute roles={['agent', 'admin']}>
                 <LayoutWrapper>
                   <ActivityLogPage />
                 </LayoutWrapper>

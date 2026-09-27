@@ -23,6 +23,7 @@ export default function PortalLayout({ user, logout, children }) {
     : []
   ),
   ...(user?.role === 'user' ? [{ label: 'Register Complaint', path: '/create', icon: '⚡' }] : []),
+  { label: 'FAQ & Helpline', path: '/faq', icon: '❓' },
 ];
 
   return (

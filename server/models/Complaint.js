@@ -28,6 +28,7 @@ const complaintSchema = new mongoose.Schema({
     enum: ['Pending', 'In Progress', 'Resolved'], 
     default: 'Pending' 
   },
+  photos: [{ type: String }], // stored as '/uploads/<filename>'
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null }
 }, { timestamps: true });

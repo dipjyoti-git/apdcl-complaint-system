@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api';
+
+const MAX_PHOTOS = 5;
+const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
 
 export default function CreateComplaint() {
   const [form, setForm] = useState({
@@ -11,8 +15,50 @@ export default function CreateComplaint() {
     esd: 'Chariali ESD',
     description: ''
   });
+  const [photos, setPhotos] = useState([]); // File objects
+  const [previews, setPreviews] = useState([]); // { url, name }
   const [error, setError] = useState('');
+  const [photoError, setPhotoError] = useState('');
   const navigate = useNavigate();
+
+  // Clean up object URLs when previews change / component unmounts
+  useEffect(() => {
+    return () => previews.forEach((p) => URL.revokeObjectURL(p.url));
+  }, [previews]);
+
+  const handlePhotoChange = (e) => {
+    setPhotoError('');
+    const files = Array.from(e.target.files || []);
+    if (photos.length + files.length > MAX_PHOTOS) {
+      setPhotoError(`You can attach up to ${MAX_PHOTOS} photos.`);
+      e.target.value = '';
+      return;
+    }
+    for (const f of files) {
+      if (!ALLOWED_TYPES.includes(f.type)) {
+        setPhotoError(`"${f.name}" is not a supported image (JPEG/PNG/WebP only).`);
+        e.target.value = '';
+        return;
+      }
+      if (f.size > MAX_SIZE) {
+        setPhotoError(`"${f.name}" exceeds the 5MB limit.`);
+        e.target.value = '';
+        return;
+      }
+    }
+    setPhotos((prev) => [...prev, ...files]);
+    setPreviews((prev) => [
+      ...prev,
+      ...files.map((f) => ({ url: URL.createObjectURL(f), name: f.name }))
+    ]);
+    e.target.value = '';
+  };
+
+  const removePhoto = (index) => {
+    URL.revokeObjectURL(previews[index].url);
+    setPhotos((prev) => prev.filter((_, i) => i !== index));
+    setPreviews((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +67,11 @@ export default function CreateComplaint() {
     }
 
     try {
-      await API.post('/complaints', form);
+      const formData = new FormData();
+      Object.entries(form).forEach(([key, value]) => formData.append(key, value));
+      photos.forEach((file) => formData.append('photos', file));
+
+      await API.post('/complaints', formData);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to submit complaint');
@@ -96,6 +146,46 @@ export default function CreateComplaint() {
             onChange={(e) => setForm({...form, description: e.target.value})} 
             required 
           />
+        </div>
+
+        <div>
+          <label className="block uppercase mb-1">
+            Attach Photos <span className="normal-case font-normal text-gray-400">(optional, max {MAX_PHOTOS}, 5MB each)</span>
+          </label>
+          <label className="flex items-center justify-center w-full border-2 border-dashed border-gray-300 rounded p-4 cursor-pointer hover:border-[#3F51B5] hover:bg-blue-50/50 transition">
+            <span className="text-gray-500 text-xs font-medium">
+              📷 Click to select images (JPEG / PNG / WebP)
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={handlePhotoChange}
+            />
+          </label>
+          {photoError && <p className="text-red-600 text-xs mt-1 font-medium">{photoError}</p>}
+          {previews.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-3">
+              {previews.map((p, i) => (
+                <div key={i} className="relative w-20 h-20 group">
+                  <img
+                    src={p.url}
+                    alt={p.name}
+                    className="w-20 h-20 object-cover rounded border border-gray-200"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removePhoto(i)}
+                    className="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center shadow hover:bg-red-700"
+                    title="Remove"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <button className="w-full bg-[#F36F21] hover:bg-orange-600 text-white font-bold py-2.5 text-xs uppercase rounded transition shadow-sm">

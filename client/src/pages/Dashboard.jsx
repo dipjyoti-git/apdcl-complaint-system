@@ -72,12 +72,12 @@ export default function Dashboard() {
       <ReportsOverview complaints={complaints} />
 
       {/* 3. Registered Complaints Header */}
-      <div className="flex justify-between items-center mb-4 mt-6">
-        <h2 className="text-lg font-bold text-gray-800">
+      <div className="flex flex-wrap gap-2 justify-between items-center mb-4 mt-6">
+        <h2 className="text-base sm:text-lg font-bold text-gray-800 break-words">
           Registered Complaints ({complaints.length})
         </h2>
         {user?.role === 'user' && (
-          <Link to="/create" className="bg-[#F36F21] hover:bg-orange-600 text-white px-4 py-2 rounded text-xs font-semibold shadow-sm">
+          <Link to="/create" className="bg-[#F36F21] hover:bg-orange-600 text-white px-4 py-2.5 min-h-[44px] inline-flex items-center rounded text-xs font-semibold shadow-sm">
             + File New Complaint
           </Link>
         )}
@@ -92,15 +92,15 @@ export default function Dashboard() {
         ) : (
           complaints.map((c) => (
             <div key={c._id} className="border p-4 rounded shadow-sm bg-white hover:border-gray-300 transition">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-bold text-base text-gray-800">{c.title}</h3>
-                  <p className="text-[11px] text-gray-400 mt-0.5">
-                    📅 Created: <span className="font-mono">{formatTimestamp(c.createdAt)}</span>
-                    {c.consumerNumber && <span className="ml-3 font-mono font-semibold text-blue-600">ID: {c.consumerNumber}</span>}
+              <div className="flex justify-between items-start gap-3">
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-bold text-base text-gray-800 break-words">{c.title}</h3>
+                  <p className="text-[11px] text-gray-400 mt-0.5 flex flex-wrap gap-x-3 gap-y-1">
+                    <span>📅 Created: <span className="font-mono break-all">{formatTimestamp(c.createdAt)}</span></span>
+                    {c.consumerNumber && <span className="font-mono font-semibold text-blue-600 break-all">ID: {c.consumerNumber}</span>}
                   </p>
                 </div>
-                <span className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                <span className={`shrink-0 px-2.5 py-1 text-xs font-semibold rounded ${
                   c.status === 'Resolved' ? 'bg-green-100 text-green-800' : 
                   c.status === 'In Progress' ? 'bg-blue-100 text-blue-800' : 'bg-orange-100 text-orange-800'
                 }`}>
@@ -108,7 +108,7 @@ export default function Dashboard() {
                 </span>
               </div>
 
-              <p className="text-sm text-gray-600 mt-2">{c.description}</p>
+              <p className="text-sm text-gray-600 mt-2 break-words">{c.description}</p>
 
               {/* Attached Photos */}
               {c.photos && c.photos.length > 0 && (
@@ -125,10 +125,10 @@ export default function Dashboard() {
                 </div>
               )}
 
-              <div className="text-xs text-gray-500 mt-3 pt-2 border-t flex flex-wrap gap-4">
-                <span><strong>Category:</strong> {c.category}</span>
-                {c.user?.name && <span><strong>Consumer:</strong> {c.user.name} ({c.user.email})</span>}
-                <span>
+              <div className="text-xs text-gray-500 mt-3 pt-2 border-t flex flex-wrap gap-x-4 gap-y-1.5">
+                <span className="break-words"><strong>Category:</strong> {c.category}</span>
+                {c.user?.name && <span className="break-words min-w-0"><strong>Consumer:</strong> {c.user.name} <span className="break-all">({c.user.email})</span></span>}
+                <span className="break-words">
                   <strong>Assigned To:</strong> {c.assignedTo ? c.assignedTo.name : <em className="text-red-500">Unassigned</em>}
                 </span>
               </div>
@@ -152,16 +152,16 @@ export default function Dashboard() {
 
               {/* Status Update Actions */}
               {(user?.role === 'agent' || user?.role === 'admin') && (
-                <div className="mt-3 flex gap-2">
+                <div className="mt-3 flex flex-wrap gap-2">
                   <button 
                     onClick={() => handleStatusChange(c._id, 'In Progress')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 text-xs rounded font-medium"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 min-h-[44px] text-xs rounded font-medium"
                   >
                     Mark In Progress
                   </button>
                   <button 
                     onClick={() => handleStatusChange(c._id, 'Resolved')}
-                    className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 text-xs rounded font-medium"
+                    className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 min-h-[44px] text-xs rounded font-medium"
                   >
                     Mark Resolved
                   </button>

@@ -25,7 +25,8 @@ export default function ActivityLogTable() {
       <div className="bg-[#3F51B5] text-white px-4 py-2 font-bold text-xs uppercase tracking-wider">
         Activity Log
       </div>
-      <table className="w-full text-left text-xs">
+      <div className="overflow-x-auto">
+      <table className="w-full min-w-[540px] text-left text-xs">
         <thead>
           <tr className="bg-gray-100 border-b border-gray-200 text-gray-600">
             <th className="p-3 font-semibold w-48">Timestamp</th>
@@ -49,6 +50,7 @@ export default function ActivityLogTable() {
           )}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

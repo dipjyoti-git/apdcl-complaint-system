@@ -31,16 +31,16 @@ export default function ResetPassword() {
   return (
     <div className="min-h-screen bg-[#F4F6F9] flex flex-col font-sans">
       {/* Top Portal Header */}
-      <header className="bg-[#3F51B5] text-white px-6 py-3 flex justify-between items-center shadow-md border-b-4 border-[#F36F21]">
-        <div className="flex items-center gap-3">
-          <div className="bg-[#F36F21] text-white text-xs font-bold px-2.5 py-1 rounded-sm uppercase tracking-wider">
+      <header className="bg-[#3F51B5] text-white px-4 sm:px-6 py-3 flex justify-between items-center gap-2 shadow-md border-b-4 border-[#F36F21]">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="bg-[#F36F21] text-white text-xs font-bold px-2.5 py-1 rounded-sm uppercase tracking-wider shrink-0">
             CMS Portal
           </div>
-          <h1 className="text-sm md:text-base font-bold tracking-wide">
+          <h1 className="text-xs sm:text-sm md:text-base font-bold tracking-wide leading-tight">
             ASSAM POWER DISTRIBUTION COMPANY LIMITED
           </h1>
         </div>
-        <span className="hidden sm:inline-block bg-[#2E7D32] text-white px-3 py-1 rounded text-xs font-semibold">
+        <span className="hidden sm:inline-block bg-[#2E7D32] text-white px-3 py-1 rounded text-xs font-semibold shrink-0">
           COMPLAINT MANAGEMENT SYSTEM
         </span>
       </header>
@@ -48,14 +48,14 @@ export default function ResetPassword() {
       {/* Main Container */}
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="bg-white w-full max-w-md rounded-lg shadow-lg border border-gray-200 overflow-hidden">
-          <div className="bg-[#2C387E] text-white p-6 text-center">
-            <h2 className="text-xl font-bold uppercase tracking-wider">Set New Password</h2>
+          <div className="bg-[#2C387E] text-white p-4 sm:p-6 text-center">
+            <h2 className="text-lg sm:text-xl font-bold uppercase tracking-wider">Set New Password</h2>
             <p className="text-xs text-blue-200 mt-1">
               Choose a new password for your account
             </p>
           </div>
 
-          <div className="p-6 space-y-4">
+          <div className="p-4 sm:p-6 space-y-4">
             {error && (
               <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 text-xs rounded">
                 {error}
@@ -101,7 +101,7 @@ export default function ResetPassword() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[#F36F21] hover:bg-orange-600 text-white font-bold py-2.5 text-sm rounded transition shadow-md uppercase tracking-wider"
+                  className="w-full bg-[#F36F21] hover:bg-orange-600 text-white font-bold py-2.5 min-h-[44px] text-sm rounded transition shadow-md uppercase tracking-wider"
                 >
                   Reset Password ➔
                 </button>

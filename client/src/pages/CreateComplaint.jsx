@@ -79,8 +79,8 @@ export default function CreateComplaint() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white p-6 rounded border border-gray-200 shadow-sm">
-      <h2 className="text-base font-bold text-gray-800 uppercase border-b pb-2 mb-4">
+    <div className="max-w-2xl mx-auto bg-white p-4 sm:p-6 rounded border border-gray-200 shadow-sm">
+      <h2 className="text-sm sm:text-base font-bold text-gray-800 uppercase border-b pb-2 mb-4 break-words">
         ⚡ File Electrical Grievance / Complaint
       </h2>
 
@@ -177,8 +177,9 @@ export default function CreateComplaint() {
                   <button
                     type="button"
                     onClick={() => removePhoto(i)}
-                    className="absolute -top-2 -right-2 bg-red-600 text-white w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center shadow hover:bg-red-700"
+                    className="absolute -top-2 -right-2 bg-red-600 text-white w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center shadow hover:bg-red-700"
                     title="Remove"
+                    aria-label={`Remove ${p.name}`}
                   >
                     ✕
                   </button>
@@ -188,7 +189,7 @@ export default function CreateComplaint() {
           )}
         </div>
 
-        <button className="w-full bg-[#F36F21] hover:bg-orange-600 text-white font-bold py-2.5 text-xs uppercase rounded transition shadow-sm">
+        <button className="w-full bg-[#F36F21] hover:bg-orange-600 text-white font-bold py-2.5 min-h-[44px] text-xs uppercase rounded transition shadow-sm">
           Submit Grievance Ticket ➔
         </button>
       </form>

@@ -38,21 +38,21 @@ export default function FaqPage() {
   return (
     <div className="min-h-screen bg-[#F4F6F9] flex flex-col font-sans">
       {/* Top Portal Header */}
-      <header className="bg-[#3F51B5] text-white px-6 py-3 flex justify-between items-center shadow-md border-b-4 border-[#F36F21]">
-        <div className="flex items-center gap-3">
-          <div className="bg-[#F36F21] text-white text-xs font-bold px-2.5 py-1 rounded-sm uppercase tracking-wider">
+      <header className="bg-[#3F51B5] text-white px-4 sm:px-6 py-3 flex justify-between items-center gap-2 shadow-md border-b-4 border-[#F36F21]">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="bg-[#F36F21] text-white text-xs font-bold px-2.5 py-1 rounded-sm uppercase tracking-wider shrink-0">
             CMS Portal
           </div>
-          <h1 className="text-sm md:text-base font-bold tracking-wide">
+          <h1 className="hidden sm:block text-sm md:text-base font-bold tracking-wide leading-tight">
             ASSAM POWER DISTRIBUTION COMPANY LIMITED
           </h1>
         </div>
-        <Link to="/login" className="bg-[#F36F21] hover:bg-orange-600 text-white text-xs font-bold px-4 py-2 rounded transition">
+        <Link to="/login" className="shrink-0 bg-[#F36F21] hover:bg-orange-600 text-white text-xs font-bold px-3 sm:px-4 py-2 min-h-[44px] inline-flex items-center rounded transition">
           Sign In →
         </Link>
       </header>
 
-      <main className="flex-1 max-w-3xl w-full mx-auto p-6">
+      <main className="flex-1 max-w-3xl w-full mx-auto p-4 sm:p-6">
         <h2 className="text-xl font-bold text-gray-800 uppercase tracking-wide mb-1">
           ❓ FAQ & Helpline
         </h2>
@@ -66,10 +66,10 @@ export default function FaqPage() {
             <div key={i} className="bg-white border border-gray-200 rounded shadow-sm overflow-hidden">
               <button
                 onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
-                className="w-full flex justify-between items-center px-4 py-3 text-left hover:bg-gray-50 transition"
+                className="w-full flex justify-between items-center gap-2 px-4 py-3 min-h-[44px] text-left hover:bg-gray-50 transition"
               >
                 <span className="text-sm font-semibold text-gray-800">{item.q}</span>
-                <span className="text-[#F36F21] font-bold text-lg leading-none ml-3">
+                <span className="text-[#F36F21] font-bold text-lg leading-none ml-3 shrink-0">
                   {openIndex === i ? '−' : '+'}
                 </span>
               </button>
@@ -88,11 +88,11 @@ export default function FaqPage() {
             <h3 className="text-base font-bold uppercase tracking-wider mb-3">
               📞 Helpline
             </h3>
-            <div className="flex items-center gap-4 bg-white/10 rounded p-4">
-              <div className="text-4xl">☎️</div>
-              <div>
-                <p className="text-xs text-blue-200 uppercase font-semibold">Toll-Free (National Electricity Helpline)</p>
-                <p className="text-3xl font-bold tracking-widest">1912</p>
+            <div className="flex items-center gap-3 sm:gap-4 bg-white/10 rounded p-4">
+              <div className="text-3xl sm:text-4xl shrink-0">☎️</div>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs text-blue-200 uppercase font-semibold">Toll-Free (National Electricity Helpline)</p>
+                <p className="text-2xl sm:text-3xl font-bold tracking-widest">1912</p>
               </div>
             </div>
             <p className="text-xs text-blue-200 mt-4 leading-relaxed">

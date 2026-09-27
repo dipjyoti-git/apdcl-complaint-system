@@ -16,9 +16,9 @@ export default function ActivityLogPage() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="flex justify-between items-center mb-4">
-        <div>
-          <h1 className="text-xl font-bold text-gray-800 uppercase tracking-wide">
+      <div className="flex flex-wrap gap-2 justify-between items-center mb-4">
+        <div className="min-w-0">
+          <h1 className="text-lg sm:text-xl font-bold text-gray-800 uppercase tracking-wide break-words">
             📋 System Activity Audit Log
           </h1>
           <p className="text-xs text-gray-500">
